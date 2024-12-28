@@ -13,8 +13,8 @@ clap = { version = "4.5.23", features = ["derive"] }
 env_logger = "0.11.6"
 freedesktop-icons = "0.2.6"
 glib = "0.20.7"
-gtk4 = "0.9.5"
-gtk4-layer-shell = "0.4.0"
+gtk = { version = "0.9.5", package = "gtk4" }
+gtk-layer-shell = { version = "0.4.0", package = "gtk4-layer-shell" }
 hyprland = "0.4.0-beta.2"
 log = { version = "0.4.22", features = ["max_level_debug"] }
 serde = "1.0.216"

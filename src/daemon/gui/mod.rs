@@ -1,8 +1,10 @@
+mod selectable_frame;
+
 use std::sync::{Arc, Mutex};
 
-use gtk4::{gio::spawn_blocking, prelude::*, Application, FlowBox, Frame, Image, Overlay, Window};
+use gtk::{gio::spawn_blocking, prelude::*, Application, FlowBox, Frame, Image, Overlay, Window};
 use anyhow::{anyhow, Result};
-use gtk4_layer_shell::{Layer, LayerShell as _};
+use gtk_layer_shell::{Layer, LayerShell as _};
 use tokio::sync::{mpsc::UnboundedReceiver, Notify};
 
 use crate::protocol::{Direction, Launch};
@@ -21,7 +23,7 @@ pub(super) async fn start_gui(app_manager: Arc<Mutex<AppManager>>, mut receiver:
     spawn_blocking(move || {
         let app = create_application();
 
-        let hold_guard = Arc::new(Mutex::new(Some(app.hold())));
+        let mut hold_guard = Some(app.hold());
         let activation_notify = Arc::new(Notify::new());
         let activation_notify2 = activation_notify.clone();
 
@@ -41,16 +43,14 @@ pub(super) async fn start_gui(app_manager: Arc<Mutex<AppManager>>, mut receiver:
                             it.show();
                             it
                         });
-                        let mut hold_guard = hold_guard.lock().unwrap();
-                        *hold_guard = None;
+                        hold_guard = None;
                     }
                     GuiOp::MoveCursor(direction) => todo!(),
                     GuiOp::ShowWindows => todo!(),
                     GuiOp::SelectCurrent => {
                         let Some(window) = window.take() else { continue };
                         window.close();
-                        let mut hold_guard = hold_guard.lock().unwrap();
-                        *hold_guard = Some(app2.hold());
+                        hold_guard = Some(app2.hold());
                     }
                 }
             }
@@ -62,8 +62,8 @@ pub(super) async fn start_gui(app_manager: Arc<Mutex<AppManager>>, mut receiver:
 
 fn create_window(app_manager: &Arc<Mutex<AppManager>>, app: &Application) -> Window {
     let flow_box = FlowBox::builder()
-        .selection_mode(gtk4::SelectionMode::None)
-        .orientation(gtk4::Orientation::Horizontal)
+        .selection_mode(gtk::SelectionMode::None)
+        .orientation(gtk::Orientation::Horizontal)
         .max_children_per_line(16)
         .min_children_per_line(16)
         .build();
