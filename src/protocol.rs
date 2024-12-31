@@ -20,8 +20,8 @@ pub(crate) enum Launch {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub(crate) enum Direction {
-    Left,
-    Right
+    Prev,
+    Next
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]

@@ -57,8 +57,8 @@ impl CliHandler for CliHandlerImpl {
 
     fn move_cursor(direction: cli::Direction) -> Self::Output {
         let direction = match direction {
-            cli::Direction::Left => protocol::Direction::Left,
-            cli::Direction::Rihgt => protocol::Direction::Right
+            cli::Direction::Prev => protocol::Direction::Prev,
+            cli::Direction::Next => protocol::Direction::Next
         };
         send_request(protocol::Request::MoveCursor(direction))
     }

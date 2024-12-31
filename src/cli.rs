@@ -55,8 +55,8 @@ pub(crate) enum OpCommand {
 
 #[derive(Clone, Debug, Subcommand)]
 pub(crate) enum Direction {
-    Left,
-    Rihgt,
+    Prev,
+    Next
 }
 
 pub(crate) trait CliHandler: Sized {

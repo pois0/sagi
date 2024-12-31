@@ -2,10 +2,12 @@ use std::collections::HashMap;
 
 use hyprland::shared::Address;
 
+pub(crate) type Applications = Vec<(String, Vec<Window>)>;
+
 #[derive(Clone, Debug)]
 pub(crate) struct AppManager {
     windows: HashMap<Address, String>,
-    apps: Vec<(String, Vec<Window>)>
+    apps: Applications
 }
 
 #[derive(Clone, Debug)]
@@ -65,7 +67,7 @@ impl AppManager {
         Some(())
     }
 
-    pub(crate) const fn get_apps(&self) -> &Vec<(String, Vec<Window>)> {
+    pub(crate) const fn get_apps(&self) -> &Applications {
         &self.apps
     }
 
@@ -81,5 +83,13 @@ impl AppManager {
 impl Window {
     pub(crate) const fn new(addr: Address, title: String) -> Self {
         Self { title, addr }
+    }
+
+    pub(crate) const fn addr(&self) -> &Address {
+        &self.addr
+    }
+
+    pub(crate) fn title(&self) -> &str {
+        self.title.as_str()
     }
 }
