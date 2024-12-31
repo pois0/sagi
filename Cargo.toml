@@ -2,6 +2,11 @@
 name = "sagi"
 version = "0.1.0"
 edition = "2021"
+license-file = "LICENSE"
+description = "Gnome-like application / window switcher for Hyprland"
+repository = "https://github.com/pois0/sagi"
+keywords = ["hyprland", "wayland"]
+readme = "README.md"
 
 [features]
 debug = []
